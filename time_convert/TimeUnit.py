@@ -987,7 +987,11 @@ class TimeUnit:
         #     down_unit = int(time_arr[checkTimeIndex + 1])
         #     if down_unit
         # 准备增加的时间单位是被检查的时间的上一级，将上一级时间+1
+        # print('cur:{}'.format(cur))
+        # print('checkTimeIndex:{}'.format(checkTimeIndex))
         cur = self.addTime(cur, checkTimeIndex - 1)
+        # print('cur:{}'.format(cur))
+        # print('tp.tunit:{}'.format(self.tp.tunit))
         time_arr = cur.format("YYYY-M-D-H-m-s").split('-')
         for i in range(0, checkTimeIndex):
             self.tp.tunit[i] = int(time_arr[i])
