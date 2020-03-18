@@ -1,11 +1,3 @@
-#-*- coding:utf-8 _*-
-"""
-@author:Xu
-@file: TimeNormalizer.py
-@desc: 时间表达式识别的主要工作类
-@time: 2019/05/23
-"""
-
 import pickle
 import regex as re
 import arrow
@@ -15,6 +7,7 @@ import os
 from time_convert.StringPreHandler import StringPreHandler
 from time_convert.TimePoint import TimePoint
 from time_convert.TimeUnit import TimeUnit
+
 
 # 时间表达式识别的主要工作类
 class TimeNormalizer:
@@ -30,23 +23,23 @@ class TimeNormalizer:
         rule = u"[0-9]月[0-9]"
         pattern = re.compile(rule)
         match = pattern.search(input_query)
-        if match != None:
+        if match is not None:
             index = input_query.find('月')
             rule = u"日|号"
             pattern = re.compile(rule)
             match = pattern.search(input_query[index:])
-            if match == None:
+            if match is None:
                 rule = u"[0-9]月[0-9]+"
                 pattern = re.compile(rule)
                 match = pattern.search(input_query)
-                if match != None:
+                if match is None:
                     end = match.span()[1]
                     input_query = input_query[:end] + '号' + input_query[end:]
 
         rule = u"月"
         pattern = re.compile(rule)
         match = pattern.search(input_query)
-        if match == None:
+        if match is None:
             input_query = input_query.replace('个', '')
 
         input_query = input_query.replace('中旬', '15号')
@@ -62,7 +55,7 @@ class TimeNormalizer:
         try:
             with open(fpath, 'rb') as f:
                 pattern = pickle.load(f)
-        except:
+        except Exception:
             with open(os.path.dirname(__file__) + '/resource/regex.txt', 'r', encoding='utf-8') as f:
                 content = f.read()
             p = re.compile(content)

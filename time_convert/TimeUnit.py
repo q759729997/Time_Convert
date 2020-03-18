@@ -1,21 +1,11 @@
-#-*- coding:utf-8 _*-
-"""
-@author:charlesXu
-@file: TimeUtil.py
-@desc: 时间处理工具类
-@time: 2019/05/24
-"""
-
 import regex as re
 import arrow
 import copy
 from time_convert.TimePoint import TimePoint
 from time_convert.RangeTimeEnum import RangeTimeEnum
 
-try:
-    from time_convert.LunarSolarConverter import *
-except:
-    from time_convert.LunarSolarConverter import *
+from time_convert.LunarSolarConverter import LunarSolarConverter
+from time_convert.LunarSolarConverter import Lunar
 
 
 # 时间语句分析
@@ -841,7 +831,7 @@ class TimeUnit:
             flag[2] = True
             try:
                 week = int(match.group())
-            except:
+            except Exception:
                 week = 1
             week -= 1
             span = week - cur.weekday()
@@ -857,7 +847,7 @@ class TimeUnit:
             flag[2] = True
             try:
                 week = int(match.group())
-            except:
+            except Exception:
                 week = 1
             week -= 1
             span = week - cur.weekday()
@@ -870,7 +860,7 @@ class TimeUnit:
             flag[2] = True
             try:
                 week = int(match.group())
-            except:
+            except Exception:
                 week = 1
             week -= 1
             span = week - cur.weekday()
@@ -884,7 +874,7 @@ class TimeUnit:
             flag[2] = True
             try:
                 week = int(match.group())
-            except:
+            except Exception:
                 week = 1
             week -= 1
             span = week - cur.weekday()
@@ -900,7 +890,7 @@ class TimeUnit:
             flag[2] = True
             try:
                 week = int(match.group())
-            except:
+            except Exception:
                 week = 1
             week -= 1
             span = week - cur.weekday()
@@ -1024,8 +1014,7 @@ class TimeUnit:
             if self.tp.tunit[i] == -1 and self.tp_origin.tunit[i] != -1:
                 self.tp.tunit[i] = self.tp_origin.tunit[i]
         # 在处理小时这个级别时，如果上文时间是下午的且下文没有主动声明小时级别以上的时间，则也把下文时间设为下午
-        if self.isFirstTimeSolveContext is True and checkTimeIndex == 3 and self.tp_origin.tunit[
-            checkTimeIndex] >= 12 and self.tp.tunit[checkTimeIndex] < 12:
+        if self.isFirstTimeSolveContext is True and checkTimeIndex == 3 and self.tp_origin.tunit[checkTimeIndex] >= 12 and self.tp.tunit[checkTimeIndex] < 12:
             self.tp.tunit[checkTimeIndex] += 12
         self.isFirstTimeSolveContext = False
 
