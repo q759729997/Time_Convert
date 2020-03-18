@@ -37,7 +37,8 @@ class TestConvert(unittest.TestCase):
             '今天',
             '昨天下午三点',
             '一个月后',
-            '明年'
+            '明年',
+            '烟花三月下扬州'
         ]
         for text in texts:
             print('{}\t{}'.format(text, tc.parse(text)))
